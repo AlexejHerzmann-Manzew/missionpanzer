@@ -33,12 +33,14 @@ public class Model {
     private static Texture triangleSmall, quadSmall;
     
     public static void load() {
+        //Подгрузка крупных и мелких текстур:
         triangle = Textures.texture("units/plate_triangle.png");
         quad = Textures.texture("units/plate_quad.png");
-        triangle.setTextureFilter(GL_NEAREST);
-        quad.setTextureFilter(GL_NEAREST);
         triangleSmall = Textures.texture("units/plate_triangle_small.png");
         quadSmall = Textures.texture("units/plate_quad_small.png");
+        //Отключение интерполяции:
+        triangle.setTextureFilter(GL_NEAREST);
+        quad.setTextureFilter(GL_NEAREST);
         triangleSmall.setTextureFilter(GL_NEAREST);
         quadSmall.setTextureFilter(GL_NEAREST);
     }
@@ -52,6 +54,7 @@ public class Model {
         }
 
         public void render(boolean quality) {
+            //Отрисовка треугольного полигона:
             if (v.length == 3) {
                 (quality?triangle:triangleSmall).bind();
                 glBegin(GL_TRIANGLES);
@@ -65,6 +68,7 @@ public class Model {
                 }
                 glEnd();
             }
+            //Отрисовка четырёхугольного полигона:
             if (v.length == 4) {
                 (quality?quad:quadSmall).bind();
                 glBegin(GL_QUADS);
@@ -94,17 +98,21 @@ public class Model {
     private final Polygon[] polygons;
 
     public Model(String name, File file) throws FileNotFoundException {
-    
         this.name = name;
         ArrayList<Vector3f> v = new ArrayList<Vector3f>();
         ArrayList<Polygon> p = new ArrayList<Model.Polygon>();
         Scanner s = new Scanner(file);
+        //Построчный парсинг файла в формате Wavefront OBJ:
         while (s.hasNextLine()) {
             String l = s.nextLine().trim();
             String a[] = l.split(" ");
+            //Если строка начинается с v, записывает её как вершину с тремя ко-
+            //ординатами:
             if (l.charAt(0) == 'v') {
                 v.add(new Vector3f(f(a[1]), -f(a[3]), f(a[2])*1.5f));
             }
+            //Если строка начинается с f, записывает её как полигон, добавив но-
+            //мера всех вершин фигуры:
             if (l.charAt(0) == 'f') {
                 Vector3f[] vs = new Vector3f[a.length - 1];
                 for (int i = 0; i < a.length - 1; i++) {
@@ -113,6 +121,7 @@ public class Model {
                 p.add(new Polygon(vs));
             }
         }
+        //Перенос полигоны из списка в массив:
         polygons = new Polygon[p.size()];
         for (int i = 0; i < p.size(); i++) {
             polygons[i] = p.get(i);
@@ -120,6 +129,7 @@ public class Model {
     }
 
     public void render(Camera camera) {
+        //Последовательная отрисовка всех полигонов:
         for (Polygon p : polygons) {
             p.render(camera.zoom>22);
         }

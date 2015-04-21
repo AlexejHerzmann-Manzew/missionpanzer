@@ -24,7 +24,7 @@ import org.newdawn.slick.opengl.Texture;
  *
  * @author yew_mentzaki
  */
-class Animation{
+public class Animation{
     private Image[] images(ArrayList<Textures.Tex> t){
         Textures.Tex[] tex = new Textures.Tex[t.size()];
         for (int i = 0; i < t.size(); i++) {

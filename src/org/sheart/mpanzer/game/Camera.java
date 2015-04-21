@@ -27,13 +27,18 @@ public class Camera {
     public float zoom;
 
     public void setProjection() {
+        //Сброс всех предыдущих смещений:
         glLoadIdentity();
+        //Отдаление камеры на расстояние зума:
         glTranslatef(0, 0, zoom - 30);
+        //Вращение камеры в трёх плоскостях.
         glRotatef(rotation.x, -1, 0, 0);
         glRotatef(rotation.y, 0, -1, 0);
         glRotatef(rotation.z, 0, 0, -1);
+        //Поворот камеры на 90 градусов вдоль оси Z, чтобы при значении z=0 она
+        //смотрела на восток, как и все другие объекты в игре:
         glRotatef(90, 0, 0, -1);
-        
+        //Сдвиг камеры на её мировые координаты.
         glTranslatef(location.x, location.y, location.z);
     }
 }

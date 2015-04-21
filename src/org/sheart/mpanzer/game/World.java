@@ -95,10 +95,14 @@ public class World {
             wheelx = 0;
             wheely = 0;
         }
-        
+        //Передача камере расположения, равного высоте тайла, над которым она на-
+        //ходится:
         camera.location.z = -terrain.getHeight(camera.location.x, camera.location.y);
+        //Применение проекций и смещений камеры:
         camera.setProjection();
+        //Отрисовка ландшафта:
         terrain.render(g, camera);
+        //Демонстративная отрисовка 100 объектов:
         for (int i = -5; i <= 5; i++) {
             for (int j = -5; j <= 5; j++) {
                 glTranslated(i * 5, j * 5, terrain.getHeight(i * 5, j * 5));

@@ -35,7 +35,7 @@ public class Textures {
         String name;
         Texture texture;
         Image image;
-
+        
         public Tex(String name, File texture) {
             this.name = name;
             try {
@@ -53,6 +53,7 @@ public class Textures {
     private static Tex[] textures;
     private static Animation[] animations;
 
+    //Алгоритм загрузки аналогичен алгоритму в org.sheart.mpanzer.game.Models.
     public static void load() {
         ArrayList<Tex> textureList = new ArrayList<Tex>();
         for (File f : new File("res/textures").listFiles()) {
@@ -73,6 +74,7 @@ public class Textures {
         tempAnimationList.clear();
     }
 
+    //Метод возвращает изображение:
     public static Image image(String name) {
         for (Tex t : textures) {
             if (t.name.equals(name)) {
@@ -82,6 +84,7 @@ public class Textures {
         return null;
     }
 
+    //Метод возвращает текстуру:
     public static Texture texture(String name) {
         for (Tex t : textures) {
             if (t.name.equals(name)) {
@@ -91,6 +94,7 @@ public class Textures {
         return null;
     }
 
+    //Метод возвращает анимацию:
     public static Animation animation(String name) {
         for (Animation a : animations) {
             if (a.name.equals(name)) {

@@ -27,8 +27,11 @@ public class Models {
     private static Model[] models;
 
     public static void load() {
+        //Подргузка текстур модели:
         Model.load();
         ArrayList<Model> modelList = new ArrayList<Model>();
+        //Последовательная обработка res/models/ с рекурсивным спуском в директо-
+        //рии, которые в ней находятся и добавляением моделей в список:
         for (File f : new File("res/models").listFiles()) {
             if (f.isDirectory()) {
                 modelList.addAll(load(f.getName(), f));
@@ -40,12 +43,14 @@ public class Models {
                 }
             }
         }
+        //Перенос моделей из списка в массив:
         models = new Model[modelList.size()];
         for (int i = 0; i < models.length; i++) {
             models[i] = modelList.get(i);
         }
     }
 
+    //Метод, возвращающий модель по пути из res/models/:
     public static Model model(String name) {
         for (Model a : models) {
             if (a.name.equals(name)) {
@@ -60,7 +65,7 @@ public class Models {
         for (File f : folder.listFiles()) {
             if (f.isDirectory()) {
                 models.addAll(load(names + "/" + f.getName(), f));
-            } else if(f.getName().split("\\.")[f.getName().split("\\.").length-1].toLowerCase().equals("obj")){
+            } else {
                 try {
                     models.add(new Model(names + "/" + f.getName(), f));
                 } catch (FileNotFoundException ex) {

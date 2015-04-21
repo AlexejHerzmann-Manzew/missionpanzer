@@ -1,18 +1,17 @@
 /*
-*   Класс: org.sheart.mpanzer.Main
-*   Описание:
-*       Этот статический является является ядром проекта, осуществляет подключе-
-*       ние библиотек, подгрузку текстур и создание окна. В классе также осу-
-*       ществляется создание и инициализация игрового мира.
-*   ____________________________________________________________________________
-*   Проект "Mission „Panzer“" лицензирован под BSD-3 License, ознакомиться с ко-
-*   торой можно в корне проекта, она изложена в файле "license.txt".
-*   Русскоязычная адаптация также находится в корне, в файле "license_rus.txt",
-*   и использует кодировку UTF-8.
-*   Разработчиком проекта является Yew_Mentzaki. Список всех контрибьюторов мож-
-*   но увидеть в корне проекта, в файле "contributors.txt".
-*/
-
+ *   Класс: org.sheart.mpanzer.Main
+ *   Описание:
+ *       Этот статический является является ядром проекта, осуществляет подключе-
+ *       ние библиотек, подгрузку текстур и создание окна. В классе также осу-
+ *       ществляется создание и инициализация игрового мира.
+ *   ____________________________________________________________________________
+ *   Проект "Mission „Panzer“" лицензирован под BSD-3 License, ознакомиться с ко-
+ *   торой можно в корне проекта, она изложена в файле "license.txt".
+ *   Русскоязычная адаптация также находится в корне, в файле "license_rus.txt",
+ *   и использует кодировку UTF-8.
+ *   Разработчиком проекта является Yew_Mentzaki. Список всех контрибьюторов мож-
+ *   но увидеть в корне проекта, в файле "contributors.txt".
+ */
 package org.sheart.mpanzer;
 
 import org.sheart.mpanzer.game.Models;
@@ -44,8 +43,8 @@ public class Main {
     public static FontRender fontRender;
 
     /*
-    * Метод вызывается при инициализации дисплея и графики.
-    */
+     * Метод вызывается при инициализации дисплея и графики.
+     */
     public static void displayInit() throws LWJGLException {
         fontRender = FontRender.getTextRender(Font.SANS_SERIF, 0, 15);
         Textures.load();
@@ -54,8 +53,8 @@ public class Main {
     public static World w = new World();
 
     /*
-    * Метод предназначен для отрисовки мира.
-    */
+     * Метод предназначен для отрисовки мира.
+     */
     public static void displayRender(Graphics g) throws LWJGLException {
         try {
             w.render(g);
@@ -66,8 +65,8 @@ public class Main {
     }
 
     /*
-    * Метод предназначен для отрисовки интерфейса.
-    */
+     * Метод предназначен для отрисовки интерфейса.
+     */
     public static void displayInterfaceRender(Graphics g) throws LWJGLException {
     }
 
@@ -78,7 +77,7 @@ public class Main {
 
     public static void setUpDisplay() {
         try {
-            
+
             Display.setDisplayMode(new DisplayMode(800, 600));
             Display.setTitle("Mission „Panzer“");
             Display.setResizable(true);
@@ -91,7 +90,6 @@ public class Main {
             glEnable(GL_ALPHA_TEST);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-            glEnable(GL_CULL_FACE);
             FloatBuffer fogColours = BufferUtils.createFloatBuffer(4);
             fogColours.put(new float[]{0.7f, 0.85f, 0.9f, 0});
             glClearColor(0.7f, 0.85f, 0.9f, 0);
@@ -137,6 +135,7 @@ public class Main {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 glEnable(GL_DEPTH_TEST);
                 glEnable(GL_FOG);
+                glEnable(GL_CULL_FACE);
                 displayRender(g);
                 long afterRender = System.currentTimeMillis();
                 int frames = ((int) (afterRender - beforeRender));
@@ -146,6 +145,7 @@ public class Main {
                 glMatrixMode(GL_MODELVIEW);
                 glDisable(GL_DEPTH_TEST);
                 glDisable(GL_FOG);
+                glDisable(GL_CULL_FACE);
                 displayInterfaceRender(g);
                 fontRender.drawString("Frames per second: " + fps, 10, 10, Color.white);
                 fontRender.drawString("Camera zoom: " + w.camera.zoom, 10, 30, Color.white);
