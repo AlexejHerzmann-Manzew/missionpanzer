@@ -29,6 +29,7 @@ import org.lwjgl.opengl.*;
 import static org.lwjgl.util.glu.GLU.*;
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.*;
+import org.sheart.mpanzer.game.Light;
 import org.sheart.mpanzer.game.Textures;
 import org.sheart.mpanzer.game.World;
 import org.sparkle.fontrender.FontRender;
@@ -119,6 +120,7 @@ public class Main {
         }
         Graphics g = new Graphics();
         int displayWidth = Display.getWidth(), displayHeight = Display.getHeight();
+        w.timer.start();
         try {
             while (!Display.isCloseRequested()) {
                 long beforeRender = System.currentTimeMillis();
@@ -157,6 +159,7 @@ public class Main {
             System.exit(1);
         }
         Display.destroy();
+        System.exit(1);
     }
 
     public static void setUpNatives() {

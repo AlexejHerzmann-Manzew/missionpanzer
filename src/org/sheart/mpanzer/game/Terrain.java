@@ -157,6 +157,8 @@ public final class Terrain {
     }
 
     public void render(Graphics g, Camera camera) {
+        //Отключение глобального света:
+        glDisable(GL_LIGHTING);
         //Получение изображений:
         grass = Textures.image("terrain/grass.png");
         grassBig = Textures.image("terrain/grass_big.png");
@@ -225,18 +227,20 @@ public final class Terrain {
         glBegin(GL_POLYGON);
         {
             glTexCoord2d(0, 0);
-            glVertex3d(px, py, getHeight(px, py) + 0.2);
+            glVertex3d(px, py, getHeight(px, py) + 0.01);
             glTexCoord2d(1, 0);
-            glVertex3d(px + 1, py, getHeight(px + 1, py) + 0.2);
+            glVertex3d(px + 1, py, getHeight(px + 1, py) + 0.01);
             glTexCoord2d(1, 1);
-            glVertex3d(px + 1, py + 1, getHeight(px + 1, py + 1) + 0.2);
+            glVertex3d(px + 1, py + 1, getHeight(px + 1, py + 1) + 0.01);
             glTexCoord2d(0, 1);
-            glVertex3d(px, py + 1, getHeight(px, py + 1) + 0.2);
+            glVertex3d(px, py + 1, getHeight(px, py + 1) + 0.01);
         }
         glEnd();
+        //Включение глобального света:
+        glEnable(GL_LIGHTING);
     }
 
-    float getHeight(double x, double y) {
+    public float getHeight(double x, double y) {
         return getHeight((int) x, (int) y);
     }
 }

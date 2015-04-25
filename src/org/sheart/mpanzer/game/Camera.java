@@ -26,7 +26,7 @@ public class Camera {
     public Vector3f location = new Vector3f(), rotation = new Vector3f();
     public float zoom;
 
-    public void setProjection() {
+    public void setProjection(World w) {
         //Сброс всех предыдущих смещений:
         glLoadIdentity();
         //Отдаление камеры на расстояние зума:
@@ -38,6 +38,8 @@ public class Camera {
         //Поворот камеры на 90 градусов вдоль оси Z, чтобы при значении z=0 она
         //смотрела на восток, как и все другие объекты в игре:
         glRotatef(90, 0, 0, -1);
+        //Включение мирового света:
+        w.light.setUp();
         //Сдвиг камеры на её мировые координаты.
         glTranslatef(location.x, location.y, location.z);
     }

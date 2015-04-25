@@ -26,13 +26,21 @@ import org.sheart.mpanzer.game.*;
  */
 public class GameObject {
     protected Random random = Main.RANDOM;
-    public float x, y, z;
+    public float x, y, z; public int worldIndex = -1;
     public World world;
     
     public GameObject(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+    /*
+    *   Метод remove() удаляет объект из мира.
+    */
+    public void remove(){
+        if(world!=null){
+            world.remove(this);
+        }
     }
     /*
     *   Метод tick() вызывается каждый цикл игрового времени.
@@ -64,6 +72,11 @@ public class GameObject {
     */
     public boolean visible = false;
     public void render(){
+        
+    }
+    
+    public boolean interfaced = false;
+    public void renderInteface(){
         
     }
 }

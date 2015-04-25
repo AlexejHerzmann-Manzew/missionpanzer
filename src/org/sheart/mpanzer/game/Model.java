@@ -60,10 +60,13 @@ public class Model {
                 glBegin(GL_TRIANGLES);
                 {
                     glTexCoord2d(0, 1);
+                    glNormal3f(v[0].x, v[0].y, v[0].z);
                     glVertex3f(v[0].x, v[0].y, v[0].z);
                     glTexCoord2d(0.5, 0);
+                    glNormal3f(v[1].x, v[1].y, v[1].z);
                     glVertex3f(v[1].x, v[1].y, v[1].z);
                     glTexCoord2d(1, 1);
+                    glNormal3f(v[2].x, v[2].y, v[2].z);
                     glVertex3f(v[2].x, v[2].y, v[2].z);
                 }
                 glEnd();
@@ -74,12 +77,16 @@ public class Model {
                 glBegin(GL_QUADS);
                 {
                     glTexCoord2d(0, 0);
+                    glNormal3f(v[0].x, v[0].y, v[0].z);
                     glVertex3f(v[0].x, v[0].y, v[0].z);
                     glTexCoord2d(1, 0);
+                    glNormal3f(v[1].x, v[1].y, v[1].z);
                     glVertex3f(v[1].x, v[1].y, v[1].z);
                     glTexCoord2d(1, 1);
+                    glNormal3f(v[2].x, v[2].y, v[2].z);
                     glVertex3f(v[2].x, v[2].y, v[2].z);
                     glTexCoord2d(0, 1);
+                    glNormal3f(v[3].x, v[3].y, v[3].z);
                     glVertex3f(v[3].x, v[3].y, v[3].z);
                 }
                 glEnd();
@@ -95,7 +102,7 @@ public class Model {
     private int i(String line) {
         return Integer.parseInt(line);
     }
-    private final Polygon[] polygons;
+    private Polygon[] polygons;
 
     public Model(String name, File file) throws FileNotFoundException {
         this.name = name;
@@ -127,11 +134,19 @@ public class Model {
             polygons[i] = p.get(i);
         }
     }
+    
+    public Model(String name){
+        this.name = name;
+        this.polygons = null;
+    }
 
-    public void render(Camera camera) {
+    public void render(Camera camera, boolean highpoly) {
         //Последовательная отрисовка всех полигонов:
+        if(polygons==null){
+            polygons = Models.model(name).polygons;
+        }
         for (Polygon p : polygons) {
-            p.render(camera.zoom>22);
+            p.render(highpoly);
         }
     }
 }
